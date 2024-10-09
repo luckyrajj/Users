@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+<configuration>
+    <appender name="console"
+              class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1}:%L - %msg%n
+            </pattern>
+        </encoder>
+    </appender>
+
+    <appender name="FILE"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${catalina.base}/logs/account.log</file>
+        <rollingPolicy
+                class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${catalina.base}/logs/archive/account-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxFileSize>10MB</maxFileSize>
+            <maxHistory>30</maxHistory>
+            <totalSizeCap>25GB</totalSizeCap>
+        </rollingPolicy>
+        <!-- <triggeringPolicy
+          class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+          <maxFileSize>10MB</maxFileSize>
+      </triggeringPolicy> -->
+        <encoder>
+            <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} %X{contextId} [%t] %c{1}:%L - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="com.example.ums" level="info" />
+
+    <root level="info">
+        <appender-ref ref="FILE" />
+    </root>
+</configuration>
